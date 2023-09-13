@@ -1,5 +1,7 @@
 import pygame
-from util.loaded_files import pokupljeno_zvuk, slika
+from classes.MainCharacter import slika
+
+from util.loaded_files import pokupljeno_zvuk
 from util.window import prozor_igre
 
 coffee_sprite=pygame.image.load('sprites/powerup/coffee.png')

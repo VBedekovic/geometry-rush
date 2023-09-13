@@ -14,8 +14,12 @@ transparent.set_alpha(100)
 
 
 #zvuk
-pokupljeno_zvuk=pygame.mixer.Sound('sound/pokupljeno.wav')
+pygame.mixer.music.load('music/Slip.wav')
+pygame.mixer.music.set_volume(0.1)
+marker_zvuk=pygame.mixer.Sound('sound/drawing_on_paper_with_marker.wav')
+gumica_zvuk=pygame.mixer.Sound('sound/eraser.wav')
+pokupljeno_zvuk=pygame.mixer.Sound('sound/pokupljeno.wav')  #in util
+hit_zvuk=pygame.mixer.Sound('sound/pogodak.wav')
+game_over_zvuk=pygame.mixer.Sound('sound/game over.wav')
 
 
-
-slika=pygame.image.load('sprites/mc/mc_slika.png')
