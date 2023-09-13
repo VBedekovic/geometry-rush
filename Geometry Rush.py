@@ -5,8 +5,8 @@ ctypes.windll.user32.SetProcessDPIAware()
 
 pygame.init()
 
-display_width=1200
-display_height=1000
+display_width=1200          #in util
+display_height=1000         #in util
 
 #boje
 black=(0,0,0)
@@ -17,7 +17,8 @@ crimson=(220,20,60)
 
 
 ######prozor
-prozor_igre=pygame.display.set_mode((display_width,display_height))
+from classes.util import prozor_igre
+#prozor_igre=pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Geometry Rush')
 game_icon=pygame.image.load('images/gameIcon.png')
 pygame.display.set_icon(game_icon)
@@ -34,7 +35,7 @@ transparent.set_alpha(100)
 
 clock=pygame.time.Clock()
 
-#izračuni
+#izračuni   #in util
 def vel_kut45(vel):
     br=(vel*(2**(1/2)))/2
     return br
@@ -84,7 +85,7 @@ def button(text, font_size, boja, okvir, na_visini):
 
 
 #####main character
-slika=pygame.image.load('sprites/mc/mc_slika.png')
+slika=pygame.image.load('sprites/mc/mc_slika.png')      #in util
 mc_desno=pygame.image.load('sprites/mc/mc_right.png')
 mc_lijevo=pygame.image.load('sprites/mc/mc_left.png')
 mc_gore=pygame.image.load('sprites/mc/mc_up.png')
@@ -110,322 +111,10 @@ def mc(x, y, smjer_slike, ghost_mode=False):
     
 
 #####metak
-slika_metak=pygame.image.load('sprites/mc/gumica.png')
-class Metak:
-    def __init__(self, x, y, smjer_x, smjer_y, vel, is_shotgun, side=None):
-        self.x=x
-        self.y=y
-        self.width=20     ##
-        self.height=20    ##
-        self.smjer_x=smjer_x
-        self.smjer_y=smjer_y
-        self.vel=vel
-        self.brisanje=False
-        self.shotgun=is_shotgun
-        self.side=side
-        
-
-    def shoot(self):        
-        prozor_igre.blit(slika_metak,(self.x, self.y))
-        
-        if not self.shotgun:
-            if self.smjer_x==0 or self.smjer_y==0:
-                self.x+=self.smjer_x*self.vel
-                self.y+=self.smjer_y*self.vel
-            else:
-                vel_xy=vel_kut45(self.vel)
-                self.x+=self.smjer_x*vel_xy
-                self.y+=self.smjer_y*vel_xy
-        else:
-            veca_str, manja_str=vel_kut_pol45(self.vel)
-            
-            #+y right
-            if self.smjer_y==1 and self.side=='right':
-                self.x+=1*manja_str
-                self.y+=1*veca_str
-            #+x left
-            if self.smjer_x==1 and self.side=='left':
-                self.x+=1*veca_str
-                self.y+=1*manja_str
-            #+x right
-            if self.smjer_x==1 and self.side=='right':
-                self.x+=1*veca_str
-                self.y+=-1*manja_str
-            #-y left
-            if self.smjer_y==-1 and self.side=='left':
-                self.x+=1*manja_str
-                self.y+=-1*veca_str
-            #-y right
-            if self.smjer_y==-1 and self.side=='right':
-                self.x+=-1*manja_str
-                self.y+=-1*veca_str
-            #-x left
-            if self.smjer_x==-1 and self.side=='left':
-                self.x+=-1*veca_str
-                self.y+=-1*manja_str
-            #-x right
-            if self.smjer_x==-1 and self.side=='right':
-                self.x+=-1*veca_str
-                self.y+=1*manja_str
-            #+y left
-            if self.smjer_y==1 and self.side=='left':
-                self.x+=-1*manja_str
-                self.y+=1*veca_str
-
-    def status(self):
-        if self.x<50 or self.x>display_width-50 or self.y<50 or self.y>display_height-50:
-            self.brisanje=True
-
-    def pogodak(self, enemy):
-        if self.x > enemy.x+enemy.width or self.x < enemy.x or self.y > enemy.y+enemy.height or self.y+self.height < enemy.y:
-            return False
-        return True
-
-
+from classes.Metak import Metak
 
 #####enemy
-angry_enemy=pygame.image.load('sprites/enemy/angry_kocka.png')
-erased_enemy_1=pygame.image.load('sprites/enemy/sad_kocka.png')
-erased_enemy_2=pygame.image.load('sprites/enemy/sad_kocka_bye1.png')
-erased_enemy_3=pygame.image.load('sprites/enemy/sad_kocka_bye2.png')
-erased_enemy_4=pygame.image.load('sprites/enemy/sad_kocka_bye3.png')
-erased_enemy_5=pygame.image.load('sprites/enemy/sad_kocka_sad_bye.png')
-erased_enemy_final=pygame.image.load('sprites/enemy/sad_kocka_final_bye.png')
-class Enemy:
-    br=0
-    def __init__(self, x, y, vel):
-        self.x=x
-        self.y=y
-        self.backup=(x,y)
-        self.width=50
-        self.height=50
-        #self.color=color
-        self.smjer_x=0
-        self.smjer_y=0
-        self.vel=vel
-        Enemy.br+=1
-        self.id=Enemy.br
-        self.upit, self.upit_2=bool(random.getrandbits(1)), bool(random.getrandbits(1))
-        self.timer=60*2
-        self.erase_timer=60*1.5
-        self.move_type=random.randint(1,3)
-        
-        
-        
-    def movement_a(self, x, y):
-        #x
-        if self.x > x:
-            self.smjer_x = -1
-        elif self.x < x:
-            self.smjer_x = 1
-        elif self.x == x:
-            self.smjer_x = 0
-        #y
-        if self.y < y:
-            self.smjer_y = 1
-        elif self.y > y:
-            self.smjer_y = -1
-        elif self.y == y:
-            self.smjer_y = 0
-        #izračun
-        if self.smjer_x==0 or self.smjer_y==0:
-            self.x+=self.smjer_x*self.vel
-            self.y+=self.smjer_y*self.vel
-        else:
-            vel_xy=vel_kut45(self.vel)
-            self.x+=self.smjer_x*vel_xy
-            self.y+=self.smjer_y*vel_xy
-
-    def movement_b(self, x, y):
-        x-=45
-        y-=45
-        #x
-        if self.x > x:
-            self.smjer_x = -1
-        elif self.x < x:
-            self.smjer_x = 1
-        elif self.x == x:
-            self.smjer_x = 0
-        #y
-        if self.y < y:
-            self.smjer_y = 1
-        elif self.y > y:
-            self.smjer_y = -1
-        elif self.y == y:
-            self.smjer_y = 0
-        #izračun
-        if self.smjer_x==0 or self.smjer_y==0:
-            self.x+=self.smjer_x*self.vel
-            self.y+=self.smjer_y*self.vel
-        else:
-            vel_xy=vel_kut45(self.vel)
-            self.x+=self.smjer_x*vel_xy
-            self.y+=self.smjer_y*vel_xy
-
-    def movement_c(self, x, y):
-        x+=45
-        y+=45
-        #x
-        if self.x > x:
-            self.smjer_x = -1
-        elif self.x < x:
-            self.smjer_x = 1
-        elif self.x == x:
-            self.smjer_x = 0
-        #y
-        if self.y < y:
-            self.smjer_y = 1
-        elif self.y > y:
-            self.smjer_y = -1
-        elif self.y == y:
-            self.smjer_y = 0
-        #izračun
-        if self.smjer_x==0 or self.smjer_y==0:
-            self.x+=self.smjer_x*self.vel
-            self.y+=self.smjer_y*self.vel
-        else:
-            vel_xy=vel_kut45(self.vel)
-            self.x+=self.smjer_x*vel_xy
-            self.y+=self.smjer_y*vel_xy
-        
-
-    def collision_with_other_enemy(self, other):
-        if self.x > other.x+other.width or self.x+self.width < other.x or self.y > other.y+other.height or self.y+self.height < other.y:
-            return False
-        return True
-
-
-    def check_collision_with_other_enemy(self, enemies):
-        for other_enemy in enemies:
-            if self.id != other_enemy.id:
-                if self.collision_with_other_enemy(other_enemy):
-                    return True
-        return False
-                
-    def avoid_movement(self):
-        #izračun
-        if self.smjer_x==0 or self.smjer_y==0:
-            self.x+=self.smjer_x*self.vel
-            self.y+=self.smjer_y*self.vel
-        else:
-            vel_xy=vel_kut45(self.vel)
-            self.x+=self.smjer_x*vel_xy
-            self.y+=self.smjer_y*vel_xy
-        
-
-    def avoid_other_enemy_movement(self, other_enemies, x, y):
-        if self.timer==60*1.5:
-            self.upit=bool(random.getrandbits(1))
-            self.upit_2=bool(random.getrandbits(1))
-        self.timer-=1
-        if self.timer==0:
-            self.timer=60*1.5
-        #upit=bool(random.getrandbits(1))
-        if self.upit:
-            self.smjer_x=0
-            #upit_2=bool(random.getrandbits(1))
-            if self.upit_2:
-                self.smjer_y=1
-            else:
-                self.smjer_y=-1
-            self.avoid_movement()
-            sudar=self.check_collision_with_other_enemy(other_enemies)
-            if sudar:
-                self.x, self.y= self.backup
-                if not self.upit_2:
-                    self.smjer_y=1
-                else:
-                    self.smjer_y=-1
-                self.avoid_movement()
-                sudar=self.check_collision_with_other_enemy(other_enemies)
-                if sudar:
-                    self.x, self.y= self.backup
-        else:
-            self.smjer_y=0
-            #upit_2=bool(random.getrandbits(1))
-            if self.upit_2:
-                self.smjer_x=1
-            else:
-                self.smjer_x=-1
-            self.avoid_movement()
-            sudar=self.check_collision_with_other_enemy(other_enemies)
-            if sudar:
-                self.x, self.y= self.backup
-                if self.upit_2:
-                    self.smjer_x=1
-                else:
-                    self.smjer_x=-1
-                self.avoid_movement()
-                sudar=self.check_collision_with_other_enemy(other_enemies)
-                if sudar:
-                    self.x, self.y= self.backup
-
-        if sudar:
-            if not self.upit:
-                self.smjer_x=0
-                #upit_2=bool(random.getrandbits(1))
-                if self.upit_2:
-                    self.smjer_y=1
-                else:
-                    self.smjer_y=-1
-                self.avoid_movement()
-                sudar=self.check_collision_with_other_enemy(other_enemies)
-                if sudar:
-                    self.x, self.y= self.backup
-                    if not self.upit_2:
-                        self.smjer_y=1
-                    else:
-                        self.smjer_y=-1
-                    self.avoid_movement()
-                    sudar=self.check_collision_with_other_enemy(other_enemies)
-                    if sudar:
-                        self.x, self.y= self.backup
-            else:
-                self.smjer_y=0
-                #upit_2=bool(random.getrandbits(1))
-                if self.upit_2:
-                    self.smjer_x=1
-                else:
-                    self.smjer_x=-1
-                self.avoid_movement()
-                sudar=self.check_collision_with_other_enemy(other_enemies)
-                if sudar:
-                    self.x, self.y= self.backup
-                    if self.upit_2:
-                        self.smjer_x=1
-                    else:
-                        self.smjer_x=-1
-                    self.avoid_movement()
-                    sudar=self.check_collision_with_other_enemy(other_enemies)
-                    if sudar:
-                        self.x, self.y= self.backup
-
-
-        
-        #self.x, self.y=self.backup
-                        #stajanje na mjestu
-
-
-    def draw(self):
-        #pygame.draw.rect(prozor_igre, self.color, [self.x, self.y, self.width, self.height])
-        prozor_igre.blit(angry_enemy, (self.x, self.y))
-
-    def erased(self):
-        if self.erase_timer > (5/6)*60*2:
-            prozor_igre.blit(erased_enemy_1, (self.x, self.y))
-        elif self.erase_timer > (4/6)*60*2:
-            prozor_igre.blit(erased_enemy_2, (self.x, self.y))
-        elif self.erase_timer > (3/6)*60*2:
-            prozor_igre.blit(erased_enemy_3, (self.x, self.y))
-        elif self.erase_timer > (2/6)*60*2:
-            prozor_igre.blit(erased_enemy_4, (self.x, self.y))
-        elif self.erase_timer > (1/6)*60*2:
-            prozor_igre.blit(erased_enemy_5, (self.x, self.y))
-        elif self.erase_timer > 0:
-            prozor_igre.blit(erased_enemy_final, (self.x, self.y))
-            
-        self.erase_timer-=1
-        return self.erase_timer
+from classes.Enemy import Enemy
 
 #####powerups
 coffee_sprite=pygame.image.load('sprites/powerup/coffee.png')
@@ -435,50 +124,8 @@ krug_sprite=pygame.image.load('sprites/powerup/krug.png')
 ghost_plus_sprite=pygame.image.load('sprites/powerup/ghost plus.png')
 nuke_gumica_sprite=pygame.image.load('sprites/powerup/nuke gumica.png')
 star_sprite=pygame.image.load('sprites/powerup/super star.png')
-class Powerup:
-    def __init__(self, x, y, tip):
-        self.x=x
-        self.y=y
-        self.tip=tip
-        _, _, self.width, self.height=slika.get_rect()
-        self.brisanje=False
-        self.timer=60*10 #sec
 
-    def draw(self):
-        if self.timer>60*2 or (110>=self.timer and self.timer>=100) or (90>=self.timer and self.timer>=80) or (70>=self.timer and self.timer>=60) or (50>=self.timer and self.timer>=40) or (30>=self.timer and self.timer>=20) or (10>=self.timer and self.timer>=0):
-            if self.tip=='coffee':
-                prozor_igre.blit(coffee_sprite, (self.x, self.y))
-            if self.tip=='shotgun':
-                prozor_igre.blit(shotgun_sprite, (self.x, self.y))
-            if self.tip=='machine gun':
-                prozor_igre.blit(machinegun_sprite, (self.x, self.y))
-            if self.tip=='krug':
-                prozor_igre.blit(krug_sprite, (self.x, self.y))
-            if self.tip=='extra ghost time':
-                prozor_igre.blit(ghost_plus_sprite, (self.x, self.y))
-            if self.tip=='nuke gumica':
-                prozor_igre.blit(nuke_gumica_sprite, (self.x, self.y))
-            if self.tip=='super star':
-                prozor_igre.blit(star_sprite, (self.x, self.y))
-        
-
-    def collid_with_mc(self, x, mc_width, y, mc_height):
-        if self.x > x+mc_width or self.x+self.width < x or self.y > y+mc_height or self.y+self.height < y:
-            return False
-        return True
-
-    def collected(self, x, mc_width, y, mc_height):
-        if self.collid_with_mc(x, mc_width, y, mc_height):
-            self.brisanje=True
-            if self.tip!='nuke gumica':
-                pygame.mixer.Sound.play(pokupljeno_zvuk)
-            return self.tip
-        return None
-
-    def status(self):
-        self.timer-=1
-        if self.timer==0:
-            self.brisanje=True
+from classes.Powerup import Powerup
 
 def ghost_vrijeme(t):
     sekunde=t//60
@@ -550,7 +197,7 @@ pygame.mixer.music.load('music/Slip.wav')
 pygame.mixer.music.set_volume(0.1)
 marker_zvuk=pygame.mixer.Sound('sound/drawing_on_paper_with_marker.wav')
 gumica_zvuk=pygame.mixer.Sound('sound/eraser.wav')
-pokupljeno_zvuk=pygame.mixer.Sound('sound/pokupljeno.wav')
+pokupljeno_zvuk=pygame.mixer.Sound('sound/pokupljeno.wav')  #in util
 hit_zvuk=pygame.mixer.Sound('sound/pogodak.wav')
 game_over_zvuk=pygame.mixer.Sound('sound/game over.wav')
 
