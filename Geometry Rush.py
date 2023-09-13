@@ -1,4 +1,6 @@
-import pygame, random
+import pygame, random, ctypes
+
+ctypes.windll.user32.SetProcessDPIAware()
 
 
 pygame.init()
