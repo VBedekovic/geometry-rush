@@ -5,9 +5,9 @@ from util.display import white, grey, black, button_frame, over_button_frame, \
 from util.loaded_files import pozadina
 from classes.Powerup import coffee_sprite, krug_sprite, \
                             machinegun_sprite, shotgun_sprite, \
-                            nuke_gumica_sprite, star_sprite
-
-from util.temp import mc_ghost, ghost_plus_sprite
+                            nuke_gumica_sprite, star_sprite, \
+                            ghost_plus_sprite
+from classes.MainCharacter import mc_ghost
 
 def info_loop(go_info, exit_game):
     go_back=False
