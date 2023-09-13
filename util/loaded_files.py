@@ -1,5 +1,6 @@
 import pygame
 
+#background
 pozadina=pygame.image.load('images/pozadina.jpg')
 pozadina_igre_load_1=pygame.image.load('images/pozadina granica 1.jpg')
 pozadina_igre_load_2=pygame.image.load('images/pozadina granica 2.jpg')
@@ -11,9 +12,7 @@ pozadina_igre=pozadina_igre.convert_alpha()
 transparent=pygame.image.load('images/transparent.png')
 transparent.set_alpha(100)
 
-
-
-#zvuk
+#sound
 pygame.mixer.music.load('music/Slip.wav')
 pygame.mixer.music.set_volume(0.1)
 marker_zvuk=pygame.mixer.Sound('sound/drawing_on_paper_with_marker.wav')

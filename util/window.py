@@ -1,7 +1,5 @@
 import pygame
 
-#in util
-
 display_width=1200          
 display_height=1000         
 

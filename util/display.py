@@ -8,7 +8,7 @@ blue=(0,0,255)
 grey=(128,128,128)
 crimson=(220,20,60)
 
-#text      #in util
+#text
 def text_objects(text, font, color):
     text_surf = font.render(text, True, color)
     return text_surf, text_surf.get_rect()
@@ -34,7 +34,7 @@ def multiline_text(text, x, y, font_size):
         prozor_igre.blit(redovi[red], (x, y+(red*font_size)+(5*red)))
         
     
-#button     #in util
+#button
 button_frame=pygame.image.load('sprites/menu/button_frame.png')
 over_button_frame=pygame.image.load('sprites/menu/button_frame_selected.png')
 over_button_frame_red=pygame.image.load('sprites/menu/button_frame_selected_red.png')
