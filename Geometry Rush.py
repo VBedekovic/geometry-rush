@@ -19,17 +19,17 @@ crimson=(220,20,60)
 ######prozor
 prozor_igre=pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Geometry Rush')
-game_icon=pygame.image.load('gameIcon.png')
+game_icon=pygame.image.load('images/gameIcon.png')
 pygame.display.set_icon(game_icon)
-pozadina=pygame.image.load('pozadina.jpg')
-pozadina_igre_load_1=pygame.image.load('pozadina granica 1.jpg')
-pozadina_igre_load_2=pygame.image.load('pozadina granica 2.jpg')
-pozadina_igre=pygame.image.load('pozadina granica final.jpg')
+pozadina=pygame.image.load('images/pozadina.jpg')
+pozadina_igre_load_1=pygame.image.load('images/pozadina granica 1.jpg')
+pozadina_igre_load_2=pygame.image.load('images/pozadina granica 2.jpg')
+pozadina_igre=pygame.image.load('images/pozadina granica final.jpg')
 pozadina=pozadina.convert_alpha()
 pozadina_igre_load_1=pozadina_igre_load_1.convert_alpha()
 pozadina_igre_load_2=pozadina_igre_load_2.convert_alpha()
 pozadina_igre=pozadina_igre.convert_alpha()
-transparent=pygame.image.load('transparent.png')
+transparent=pygame.image.load('images/transparent.png')
 transparent.set_alpha(100)
 
 clock=pygame.time.Clock()
@@ -71,9 +71,9 @@ def multiline_text(text, x, y, font_size):
         
     
 #button
-button_frame=pygame.image.load('button_frame.png')
-over_button_frame=pygame.image.load('button_frame_selected.png')
-over_button_frame_red=pygame.image.load('button_frame_selected_red.png')
+button_frame=pygame.image.load('sprites/menu/button_frame.png')
+over_button_frame=pygame.image.load('sprites/menu/button_frame_selected.png')
+over_button_frame_red=pygame.image.load('sprites/menu/button_frame_selected_red.png')
 def button(text, font_size, boja, okvir, na_visini):
     button_rect=okvir.get_rect()
     button_rect.center=((display_width/2), na_visini)
@@ -84,15 +84,15 @@ def button(text, font_size, boja, okvir, na_visini):
 
 
 #####main character
-slika=pygame.image.load('mc_slika.png')
-mc_desno=pygame.image.load('mc_right.png')
-mc_lijevo=pygame.image.load('mc_left.png')
-mc_gore=pygame.image.load('mc_up.png')
-mc_dolje=pygame.image.load('mc_down.png')
-mc_erased=pygame.image.load('mc_erased.png')
-mc_died=pygame.image.load('mc_died.png')
-mc_happy=pygame.image.load('mc_happy.png')
-mc_ghost=pygame.image.load('mc_ghost.png')
+slika=pygame.image.load('sprites/mc/mc_slika.png')
+mc_desno=pygame.image.load('sprites/mc/mc_right.png')
+mc_lijevo=pygame.image.load('sprites/mc/mc_left.png')
+mc_gore=pygame.image.load('sprites/mc/mc_up.png')
+mc_dolje=pygame.image.load('sprites/mc/mc_down.png')
+mc_erased=pygame.image.load('sprites/mc/mc_erased.png')
+mc_died=pygame.image.load('sprites/mc/mc_died.png')
+mc_happy=pygame.image.load('sprites/mc/mc_happy.png')
+mc_ghost=pygame.image.load('sprites/mc/mc_ghost.png')
 def mc(x, y, smjer_slike, ghost_mode=False):
     if not ghost_mode:
         if smjer_slike=='center':
@@ -110,7 +110,7 @@ def mc(x, y, smjer_slike, ghost_mode=False):
     
 
 #####metak
-slika_metak=pygame.image.load('gumica.png')
+slika_metak=pygame.image.load('sprites/mc/gumica.png')
 class Metak:
     def __init__(self, x, y, smjer_x, smjer_y, vel, is_shotgun, side=None):
         self.x=x
@@ -184,13 +184,13 @@ class Metak:
 
 
 #####enemy
-angry_enemy=pygame.image.load('angry_kocka.png')
-erased_enemy_1=pygame.image.load('sad_kocka.png')
-erased_enemy_2=pygame.image.load('sad_kocka_bye1.png')
-erased_enemy_3=pygame.image.load('sad_kocka_bye2.png')
-erased_enemy_4=pygame.image.load('sad_kocka_bye3.png')
-erased_enemy_5=pygame.image.load('sad_kocka_sad_bye.png')
-erased_enemy_final=pygame.image.load('sad_kocka_final_bye.png')
+angry_enemy=pygame.image.load('sprites/enemy/angry_kocka.png')
+erased_enemy_1=pygame.image.load('sprites/enemy/sad_kocka.png')
+erased_enemy_2=pygame.image.load('sprites/enemy/sad_kocka_bye1.png')
+erased_enemy_3=pygame.image.load('sprites/enemy/sad_kocka_bye2.png')
+erased_enemy_4=pygame.image.load('sprites/enemy/sad_kocka_bye3.png')
+erased_enemy_5=pygame.image.load('sprites/enemy/sad_kocka_sad_bye.png')
+erased_enemy_final=pygame.image.load('sprites/enemy/sad_kocka_final_bye.png')
 class Enemy:
     br=0
     def __init__(self, x, y, vel):
@@ -428,13 +428,13 @@ class Enemy:
         return self.erase_timer
 
 #####powerups
-coffee_sprite=pygame.image.load('coffee.png')
-shotgun_sprite=pygame.image.load('shotgun.png')
-machinegun_sprite=pygame.image.load('machine gun.png')
-krug_sprite=pygame.image.load('krug.png')
-ghost_plus_sprite=pygame.image.load('ghost plus.png')
-nuke_gumica_sprite=pygame.image.load('nuke gumica.png')
-star_sprite=pygame.image.load('super star.png')
+coffee_sprite=pygame.image.load('sprites/powerup/coffee.png')
+shotgun_sprite=pygame.image.load('sprites/powerup/shotgun.png')
+machinegun_sprite=pygame.image.load('sprites/powerup/machine gun.png')
+krug_sprite=pygame.image.load('sprites/powerup/krug.png')
+ghost_plus_sprite=pygame.image.load('sprites/powerup/ghost plus.png')
+nuke_gumica_sprite=pygame.image.load('sprites/powerup/nuke gumica.png')
+star_sprite=pygame.image.load('sprites/powerup/super star.png')
 class Powerup:
     def __init__(self, x, y, tip):
         self.x=x
@@ -546,13 +546,13 @@ def sat(t):
 
 
 #####zvuk
-pygame.mixer.music.load('Slip.wav')
+pygame.mixer.music.load('music/Slip.wav')
 pygame.mixer.music.set_volume(0.1)
-marker_zvuk=pygame.mixer.Sound('drawing_on_paper_with_marker.wav')
-gumica_zvuk=pygame.mixer.Sound('eraser.wav')
-pokupljeno_zvuk=pygame.mixer.Sound('pokupljeno.wav')
-hit_zvuk=pygame.mixer.Sound('pogodak.wav')
-game_over_zvuk=pygame.mixer.Sound('game over.wav')
+marker_zvuk=pygame.mixer.Sound('sound/drawing_on_paper_with_marker.wav')
+gumica_zvuk=pygame.mixer.Sound('sound/eraser.wav')
+pokupljeno_zvuk=pygame.mixer.Sound('sound/pokupljeno.wav')
+hit_zvuk=pygame.mixer.Sound('sound/pogodak.wav')
+game_over_zvuk=pygame.mixer.Sound('sound/game over.wav')
 
 
 def main_menu_loop(play_game, go_scoreboard, go_info, exit_game):
