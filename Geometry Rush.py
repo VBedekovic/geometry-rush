@@ -8,7 +8,7 @@ pygame.init()
 display_width=1200          #in util
 display_height=1000         #in util
 
-#boje
+#boje       #in util
 black=(0,0,0)
 white=(255,255,255)
 blue=(0,0,255)
@@ -17,12 +17,15 @@ crimson=(220,20,60)
 
 
 ######prozor
-from classes.util import prozor_igre
+from util.window import prozor_igre
 #prozor_igre=pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Geometry Rush')
 game_icon=pygame.image.load('images/gameIcon.png')
 pygame.display.set_icon(game_icon)
-pozadina=pygame.image.load('images/pozadina.jpg')
+
+#in util  from here down,  above isn't
+from util.loaded_files import pozadina, pozadina_igre_load_1, pozadina_igre_load_2, pozadina_igre, transparent
+""" pozadina=pygame.image.load('images/pozadina.jpg')
 pozadina_igre_load_1=pygame.image.load('images/pozadina granica 1.jpg')
 pozadina_igre_load_2=pygame.image.load('images/pozadina granica 2.jpg')
 pozadina_igre=pygame.image.load('images/pozadina granica final.jpg')
@@ -31,9 +34,10 @@ pozadina_igre_load_1=pozadina_igre_load_1.convert_alpha()
 pozadina_igre_load_2=pozadina_igre_load_2.convert_alpha()
 pozadina_igre=pozadina_igre.convert_alpha()
 transparent=pygame.image.load('images/transparent.png')
-transparent.set_alpha(100)
+transparent.set_alpha(100) """
 
-clock=pygame.time.Clock()
+#clock=pygame.time.Clock()   #moved to util.window
+from util.window import clock
 
 #izračuni   #in util
 def vel_kut45(vel):
@@ -45,7 +49,7 @@ def vel_kut_pol45(vel):
     b=vel*0.38627   #sin(45/2)   
     return a, b
 
-#tekst
+#tekst      #in util
 def text_objects(text, font, color):
     text_surf = font.render(text, True, color)
     return text_surf, text_surf.get_rect()
@@ -71,7 +75,7 @@ def multiline_text(text, x, y, font_size):
         prozor_igre.blit(redovi[red], (x, y+(red*font_size)+(5*red)))
         
     
-#button
+#button     #in util
 button_frame=pygame.image.load('sprites/menu/button_frame.png')
 over_button_frame=pygame.image.load('sprites/menu/button_frame_selected.png')
 over_button_frame_red=pygame.image.load('sprites/menu/button_frame_selected_red.png')
@@ -202,76 +206,8 @@ hit_zvuk=pygame.mixer.Sound('sound/pogodak.wav')
 game_over_zvuk=pygame.mixer.Sound('sound/game over.wav')
 
 
-def main_menu_loop(play_game, go_scoreboard, go_info, exit_game):
-    in_loop=True
-    mouse_wait_time=30*0.3
-    mouse_click=0
-    while in_loop:
-        for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                in_loop=False
-                exit_game=True
-
-
-
-            if event.type==pygame.KEYUP:
-                if event.key==pygame.K_SPACE:
-                    play_game=True
-                    in_loop=False
-
-
-        #crtanje na ekran i interakcija
-        prozor_igre.fill(white)
-        prozor_igre.blit(pozadina,(0,0))
-        
-        title('GEOMETRY RUSH')
-
-        
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        if mouse_wait_time!=0:
-            mouse_wait_time-=1
-        else:
-            mouse_click, _ , _ =pygame.mouse.get_pressed()  # dobije se tuple (0,0,0) --> (lijevi klik, srednji klik, desni klik)
-                                                        # pritiskom 0 prelazi u 1
-        # x=475 | y=250,450,650,850 | w=250 | h=100
-        if 475 < mouse_x < 475+250 and 250 < mouse_y < 250+100:
-            button('start', 70, black, over_button_frame, 300)
-            if mouse_click==1:
-                play_game=True
-                in_loop=False
-        else:
-            button('start', 70, grey, button_frame, 300)
-            
-        if 475 < mouse_x < 475+250 and 450 < mouse_y < 450+100:         
-            button('score', 70, black, over_button_frame, 500)
-            if mouse_click==1:
-                go_scoreboard=True
-                in_loop=False
-        else:
-            button('score', 70, grey, button_frame, 500)
-
-        if 475 < mouse_x < 475+250 and 650 < mouse_y < 650+100:         
-            button('info', 70, black, over_button_frame, 700)
-            if mouse_click==1:
-                go_info=True
-                in_loop=False
-        else:
-            button('info', 70, grey, button_frame, 700)
-
-        if 475 < mouse_x < 475+250 and 850 < mouse_y < 850+100:
-            button('exit', 70, crimson, over_button_frame_red, 900)
-            if mouse_click==1:
-                in_loop=False
-                exit_game=True
-        else:
-            button('exit', 70, grey, button_frame, 900)
-
-        pygame.display.update()
-        clock.tick(15) #fps
-        
-
-    return play_game, go_scoreboard, go_info, exit_game
-
+#def main_menu_loop():
+from game_loops.main_menu import main_menu_loop
 
 def game_loop(play_game, exit_game):
     sekunde=0

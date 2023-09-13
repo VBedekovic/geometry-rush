@@ -1,5 +1,6 @@
 import pygame
-from classes.util import display_width, display_height, prozor_igre, vel_kut45, vel_kut_pol45
+from util.trigonometry import vel_kut45, vel_kut_pol45
+from util.window import prozor_igre, display_width, display_height
 
 slika_metak=pygame.image.load('sprites/mc/gumica.png')
 class Metak:

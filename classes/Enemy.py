@@ -1,5 +1,6 @@
 import pygame, random
-from classes.util import prozor_igre, vel_kut45
+from util.trigonometry import vel_kut45
+from util.window import prozor_igre
 
 angry_enemy=pygame.image.load('sprites/enemy/angry_kocka.png')
 erased_enemy_1=pygame.image.load('sprites/enemy/sad_kocka.png')

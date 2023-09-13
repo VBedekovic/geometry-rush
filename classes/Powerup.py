@@ -1,5 +1,6 @@
 import pygame
-from classes.util import prozor_igre, pokupljeno_zvuk, slika
+from util.loaded_files import pokupljeno_zvuk, slika
+from util.window import prozor_igre
 
 coffee_sprite=pygame.image.load('sprites/powerup/coffee.png')
 shotgun_sprite=pygame.image.load('sprites/powerup/shotgun.png')
