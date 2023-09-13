@@ -148,15 +148,15 @@ game_over_zvuk=pygame.mixer.Sound('sound/game over.wav')
 
 
 #def main_menu_loop():
-from game_loops.main_menu import main_menu_loop
+from game_states.main_menu import main_menu_loop
 
 #def game_loop(play_game, exit_game):
-from game_loops.game import game_loop
+from game_states.game import game_loop
 
 
 
 #def play_again_loop(play_game, exit_game, score):
-from game_loops.play_again import play_again_loop
+from game_states.play_again import play_again_loop
 
 def scoreboard_loop(go_scoreboard, exit_game):
     with open('scoreboard.txt', 'r') as dat:
@@ -230,7 +230,7 @@ def scoreboard_loop(go_scoreboard, exit_game):
 
 
 #def info_loop(go_info, exit_game):
-from game_loops.info import info_loop   
+from game_states.info import info_loop   
 
 play_game=False
 play_again=False

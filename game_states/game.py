@@ -1,5 +1,5 @@
 import pygame, random
-from game_loops.pause import pause_game_loop
+from game_states.pause import pause_game_loop
 
 from classes.MainCharacter import mc, mc_erased
 from classes.Enemy import Enemy
