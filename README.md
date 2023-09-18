@@ -2,7 +2,7 @@
 My first major project, a top-down shooter videogame written in Python 3 with the PyGame library.
 
 ## About
-This project was originally made in 2019, recently refactored to have better code readability and general project structure. The documentation is written in Croatian.
+This project was originally made in 2019, recently refactored to have better code readability and general project structure.
 Almost all of the sprites where made by me with tools on www.pixilart.com, MS Paint and Photoshop. The sound files where downloaded from freesound.org and modified to fit the game.
 
 ## How to play
